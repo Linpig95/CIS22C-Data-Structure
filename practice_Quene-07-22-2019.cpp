@@ -4,24 +4,24 @@ template <class T>
 class Queue : public DList<T>
 {
     public:
-    void push(shared_ptr<DList<T>> newItem)
+    void push(shared_ptr<DListNode<T>> newItem)
     {
         this->append(newItem);
     }
 
-    shared_ptr<DList<T>> pop()
+    shared_ptr<DListNode<T>> pop()
     {
-        shared_ptr<DList<T>> poppedItem = head;
-        this->remove(head);
+        shared_ptr<DListNode<T>> poppedItem = this->head;
+        this->remove(0);
         return poppedItem;
     }
 };
 
 int main() {
-    shared_ptr<Queue<string>> WQueue = new shared_ptr<Queue<string>>();
-    WQueue->push(new shared_ptr<DListNode<string>>("Mel"));
-    WQueue->push(new DListNode<string>("Nina"));
-    WQueue->push(new DListNode<string>("Ruth"));
+    shared_ptr<Queue<string>> WQueue = make_shared<Queue<string>>();
+    WQueue->push(make_shared<DListNode<string>>("Mel"));
+    WQueue->push(make_shared<DListNode<string>>("Nina"));
+    WQueue->push(make_shared<DListNode<string>>("Ruth"));
     cout << "print Result: ";
     WQueue->print();
     cout << endl;
@@ -29,5 +29,7 @@ int main() {
     cout << "print Result: ";
     WQueue->print();
     cout << endl;
-    cout << endl;
+    WQueue->pop();
+    cout << "print Result: ";
+    WQueue->print();
 }
