@@ -33,13 +33,13 @@ int main(){
     cout << "\nChaining hash table collision times: " << cht.n_collision() << right << endl;
     cout << "\nLinear probing hash table collision times: " << lpht.n_collision() << right << endl;
     cout << "\nDouble hashing hash table collision times: " <<  dhht.n_collision() << right << endl;
-    for (auto c : customers) {
-        cht.remove(c);
-        lpht.remove(c);
-    }
-    cout << "\nAfter remove: " << endl;
-    cout << "Chaining remains " << cht.n_inserted() << endl;
-    cout << "Linear probing remains " << lpht.n_inserted() << endl;
+    // for (auto c : customers) {
+    //    cht.remove(c);
+    //    lpht.remove(c);
+    //}
+    //cout << "\nAfter remove: " << endl;
+    //cout << "Chaining remains " << cht.n_inserted() << endl;
+    //cout << "Linear probing remains " << lpht.n_inserted() << endl;
     return 0;
 
 }
