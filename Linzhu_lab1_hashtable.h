@@ -3,17 +3,16 @@
 #include <utility>
 #include <iomanip>
 #include <algorithm>
-using std::vector;
-using std::pair;
 
 struct Customer
 {
     string firstName;
     string lastName;
     string id;
-    bool operator==(const Customer& other) {
+
+    bool operator ==(const Customer& other) {
         return (firstName == other.firstName) &&
-        (lastName == other.lastName) && (id == other.id);
+            (lastName == other.lastName) && (id == other.id);
     }
     Customer(string f, string l, string id)
         : firstName(f),
@@ -22,30 +21,6 @@ struct Customer
     {
     }
 };
-
-bool is_prime(int n)
-{
-    if (n == 2 || n == 3)
-        return true;
-    if (n % 2 == 0 || n % 3 == 0)
-        return false;
-    int div = 6;
-    while (div * div - 2 * div + 1 <= n)
-    {
-        if (n % (div - 1) == 0)
-            return false;
-        if (n % (div + 1) == 0)
-            return false;
-        div += 6;
-    }
-    return true;
-}
-
-long long next_prime(int n) 
-{
-    while (!is_prime(++n));
-    return n;
-}
 
 using HashV = DList<Customer>;
 
@@ -58,9 +33,10 @@ public:
     { resize(10); }
     virtual void insert(Customer) = 0;
     virtual void remove(Customer) = 0;
+    // search will return a Costomer's pointer.
     virtual Customer* search(string) = 0;
-    // virtual Customer* remove(string) = 0;
     void resize(int n = 0);
+    // unsigned int 32b defualt;
     uint32_t hash(string key);
     uint32_t n_collision() { return n_collision_; }
     uint32_t n_inserted() { return n_inserted_; }
@@ -70,10 +46,11 @@ protected:
     uint32_t n_inserted_;
 };
 
-
+    // hash table resize to increases the number of buckets
+    // resized to the next prime number greater and equal than N * 2
 void HashTable::resize(int n)
 {
-    int new_size = (n == 0 ? next_prime(arr_.size() * 2) : n);
+    int new_size = (n == 0 ? arr_.size() * 2 : n);
     cout << "resizing to " << setw(8) << new_size << right << endl << endl;
     vector<HashV> cp_arr(arr_);
     arr_ = vector<HashV>(new_size, HashV());
@@ -87,7 +64,7 @@ void HashTable::resize(int n)
         }
     }
 }
-
+// Hash function: key % array.size.
 uint32_t HashTable::hash(string key)
 {
     const int p = 31;
