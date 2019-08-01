@@ -32,7 +32,7 @@ void radix_sort(vector<string>& v)
     int max_digits = getMax(v);
     for (auto digit_index = 0; digit_index < max_digits; digit_index++) {
         for (auto i = 0; i < v.size(); i++) {
-            auto bucket_index = static_cast<int>(*(v[i].end()-digit_index-1));
+            auto bucket_index = digit_index < v[i].length() ? static_cast<int>(*(v[i].end()-digit_index-1)) : 0;
             buckets[bucket_index].append(make_shared<ListNode<string>>(v[i]));
         }
         auto array_index = 0;
@@ -50,16 +50,16 @@ int main()
     vector<string> array_str;
     string info = "";
     ifstream inputFile;
-    inputFile.open("Numbers.txt", ios::in);
+    inputFile.open("Dict.txt", ios::in);
     if (inputFile.fail()) {
         cerr << "Could not find file" << endl;
     }
-    while(inputFile){
+    while(inputFile.good()){
         getline(inputFile, info);
         array_str.push_back(info);
     }
     inputFile.close();
-    cout << "after sort" << endl;
+    cout << "After Sort: " << endl;
     radix_sort(array_str);
     for (auto e : array_str) {
         cout << e << endl;
