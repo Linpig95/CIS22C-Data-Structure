@@ -1,6 +1,29 @@
 #include <iostream>
 #include <memory>
+#include <ostream>
 using namespace std;
+namespace Color {
+    enum Code {
+        FG_RED      = 31,
+        FG_GREEN    = 32,
+        FG_BLUE     = 34,
+        FG_DEFAULT  = 39,
+        BG_RED      = 41,
+        BG_GREEN    = 42,
+        BG_BLUE     = 44,
+        BG_DEFAULT  = 49
+    };
+    class Modifier {
+        Code code;
+    public:
+        Modifier() : code(FG_DEFAULT) {}
+        Modifier(Code pCode) : code(pCode) {}
+        friend std::ostream&
+        operator<<(std::ostream& os, const Modifier& mod) {
+            return os << "\033[" << mod.code << "m";
+        }
+    };
+}
 template<class T>
 struct ListNode
 {
@@ -175,4 +198,46 @@ shared_ptr<ListNode<T>> DList<T>::search(T v)
         p = p->next;
     }
     return nullptr;
+}
+
+struct Customer {
+    string firstName;
+    string lastName;
+    string id;
+    bool operator ==(const Customer& other) {
+        return (firstName == other.firstName) &&
+            (lastName == other.lastName) && (id == other.id);
+    }
+
+    bool operator < (const Customer& other) {
+        if (firstName.length() < other.firstName.length()) {
+            return true;
+        } else if (firstName.length() > other.firstName.length()) {
+            return false;
+        }
+        return firstName < other.firstName;
+    }
+
+    bool operator > (const Customer& other) {
+        if (firstName.length() > other.firstName.length()) {
+            return true;
+        } else if (firstName.length() < other.firstName.length()) {
+            return false;
+        }
+        return firstName > other.firstName;
+    }
+    Customer(){}
+    Customer(string f, string l, string id)
+        : firstName(f),
+          lastName(l),
+          id(id)
+    {
+    }
+    friend ostream& operator<<(ostream& os, const Customer&);
+};
+
+ostream& operator<<(ostream& os, const Customer& c)
+{
+    os << c.firstName;
+    return os;
 }
