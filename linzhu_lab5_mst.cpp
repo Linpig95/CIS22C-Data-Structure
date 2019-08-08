@@ -219,6 +219,7 @@ int main()
     }
     PrimMST<int> mst(graph);
     auto es = mst.edges();
+    cout << endl;
     cout << "MST is: " << endl;
     for (int i = 0; i < es.size(); i++)
     {
@@ -228,7 +229,7 @@ int main()
              << vertex_city_mapping[w] << ", "
              << es[i].weight() << ")" << endl;
     }
-    cout << mst.weight() << endl;
+    cout << "\nLowest Cost: " << mst.weight() << endl;
     return 0;
 
 }
